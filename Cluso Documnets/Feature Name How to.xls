@@ -1,0 +1,136 @@
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<title>Cluso Full App Test Cases</title>
+<style>
+  table { border-collapse: collapse; width: 100%; font-family: Calibri, Arial, sans-serif; font-size: 12px; }
+  th, td { border: 1px solid #333; padding: 6px; vertical-align: top; }
+  th { background: #d9e1f2; font-weight: bold; }
+  .cat { background: #f2f2f2; font-weight: bold; }
+</style>
+</head>
+<body>
+<table>
+  <tr>
+    <th>TC ID</th>
+    <th>Portal</th>
+    <th>Feature Name</th>
+    <th>How To</th>
+    <th>Preconditions</th>
+    <th>Test Data</th>
+    <th>Expected Result</th>
+    <th>Type</th>
+    <th>Priority</th>
+  </tr>
+
+  <tr><td colspan='9' class='cat'>Setup and Admin Authentication</td></tr>
+  <tr><td>TC-001</td><td>Admin</td><td>Initial setup success</td><td>Call POST setup route with valid setup key</td><td>Empty or partial database</td><td>ADMIN_SETUP_KEY valid value</td><td>Superadmin created and default services seeded</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-002</td><td>Admin</td><td>Initial setup invalid key</td><td>Call POST setup route with wrong setup key</td><td>Setup route reachable</td><td>Invalid setup key</td><td>403 response with invalid setup key error</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-003</td><td>Admin</td><td>Admin login success</td><td>Login from admin sign in page</td><td>Admin user exists</td><td>admin@cluso.com and admin123</td><td>Login success and admin cookie set</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-004</td><td>Admin</td><td>Admin login wrong password</td><td>Submit valid email with wrong password</td><td>Admin user exists</td><td>admin@cluso.com and wrong pass</td><td>401 invalid credentials</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-005</td><td>Admin</td><td>Admin me endpoint</td><td>Open dashboard and trigger auth me call</td><td>Admin logged in</td><td>Valid admin cookie</td><td>User profile is returned with admin role</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-006</td><td>Admin</td><td>Admin logout</td><td>Click logout in admin portal</td><td>Admin logged in</td><td>None</td><td>Cookie cleared and user redirected to login</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-007</td><td>Admin</td><td>Admin change password success</td><td>Open settings and submit current and new password</td><td>Admin logged in</td><td>current admin123 new Admin1234</td><td>Password hash updated and success message shown</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-008</td><td>Admin</td><td>Admin change password wrong current</td><td>Submit invalid current password</td><td>Admin logged in</td><td>wrong current and new password</td><td>401 current password incorrect</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-009</td><td>Admin</td><td>Create manager account</td><td>Use admin management page to create manager</td><td>Superadmin logged in</td><td>Unique manager email</td><td>Manager account created in user collection</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-010</td><td>Admin</td><td>Non superadmin cannot create admin</td><td>Try POST admins route with admin role account</td><td>Admin logged in not superadmin</td><td>Valid create payload</td><td>401 unauthorized</td><td>Negative</td><td>High</td></tr>
+
+  <tr><td colspan='9' class='cat'>Service Catalog and Company Management</td></tr>
+  <tr><td>TC-011</td><td>Admin</td><td>Create regular service</td><td>Add service from services page</td><td>Admin logged in</td><td>Name plus price plus currency</td><td>Service saved and appears in list</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-012</td><td>Admin</td><td>Create service duplicate name</td><td>Create same service name again</td><td>Service exists</td><td>Existing name with different case</td><td>409 service already exists</td><td>Negative</td><td>Medium</td></tr>
+  <tr><td>TC-013</td><td>Admin</td><td>Create package service valid</td><td>Create service with isPackage true and two included services</td><td>At least two regular services exist</td><td>Package with included ids</td><td>Package created successfully</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-014</td><td>Admin</td><td>Create package with one service only</td><td>Try package create with one included service</td><td>Admin logged in</td><td>Single included service id</td><td>400 package must include at least two services</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-015</td><td>Admin</td><td>Package cannot include package</td><td>Try to include package id inside package</td><td>At least one package exists</td><td>Package id inside includedServiceIds</td><td>400 package can only include regular services</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-016</td><td>Admin</td><td>Update service form fields</td><td>Edit form fields via services PATCH flow</td><td>Service exists</td><td>Text number file date fields</td><td>Fields persisted and returned in GET services</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-017</td><td>Admin</td><td>File field cannot be repeatable</td><td>Set repeatable true for file type field</td><td>Service edit open</td><td>fieldType file repeatable true</td><td>Validation error returned</td><td>Negative</td><td>Medium</td></tr>
+  <tr><td>TC-018</td><td>Admin</td><td>Delete service</td><td>Delete selected service from services screen</td><td>Service exists and not required by active tests</td><td>Service id</td><td>Service removed from list</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-019</td><td>Admin</td><td>Create customer company</td><td>Create customer account with selected services</td><td>Admin logged in</td><td>customer email plus service assignments</td><td>Customer user created with selectedServices snapshot</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-020</td><td>Admin</td><td>Update customer services</td><td>Edit customer selected services and prices</td><td>Customer exists</td><td>Service id and price updates</td><td>Customer selectedServices updated</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-021</td><td>Admin</td><td>Get customers with stats</td><td>Open companies page and load customers</td><td>Requests exist for at least one customer</td><td>None</td><td>Stats include total requests and last status</td><td>Positive</td><td>Medium</td></tr>
+
+  <tr><td colspan='9' class='cat'>Verifier and Manager Team Features</td></tr>
+  <tr><td>TC-022</td><td>Admin</td><td>Create verifier account</td><td>Create verifier with assigned companies and optional manager</td><td>Admin logged in</td><td>Unique verifier email</td><td>Verifier user created with role verifier</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-023</td><td>Admin</td><td>Update verifier company access by admin</td><td>PATCH verifiers route with company ids</td><td>Verifier exists</td><td>Verifier id plus valid company ids</td><td>assignedCompanies replaced with provided values</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-024</td><td>Admin</td><td>Assign manager to verifiers</td><td>Use PUT verifiers manager assignment</td><td>Manager and verifiers exist</td><td>manager id plus list of verifier ids</td><td>Verifier manager references updated</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-025</td><td>Admin</td><td>Clear manager assignment</td><td>Use PUT verifiers with empty manager id</td><td>Verifiers have manager assigned</td><td>Blank manager id</td><td>Manager link cleared for selected verifiers</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-026</td><td>Manager</td><td>Manager sees only managed verifiers</td><td>Login as manager and open team page</td><td>Manager linked to verifiers</td><td>Manager credentials</td><td>Only managed verifier list is returned</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-027</td><td>Manager</td><td>Manager cannot set out of scope company</td><td>Manager tries to grant company not in manager scope</td><td>Manager logged in</td><td>Company id outside manager assignedCompanies</td><td>403 forbidden</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-028</td><td>Manager</td><td>Manager cannot update manager role access</td><td>Manager sends PATCH verifiers targetRole manager</td><td>Manager logged in</td><td>targetRole manager</td><td>403 managers can only update verifier access</td><td>Negative</td><td>Medium</td></tr>
+
+  <tr><td colspan='9' class='cat'>Customer Authentication and Team Management</td></tr>
+  <tr><td>TC-029</td><td>Customer</td><td>Customer login success</td><td>Sign in from customer portal</td><td>Customer user exists</td><td>customer@techcorp.com and cust123</td><td>Customer cookie set and dashboard opens</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-030</td><td>Customer</td><td>Delegate login success</td><td>Sign in with delegate user credentials</td><td>Delegate exists</td><td>delegate@techcorp.com and del123</td><td>Delegate session starts and dashboard opens</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-031</td><td>Customer</td><td>Deactivated user login blocked</td><td>Deactivate delegate then attempt login</td><td>Delegate deactivated</td><td>Old delegate credentials</td><td>403 account deactivated</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-032</td><td>Customer</td><td>Customer me endpoint returns services</td><td>Load dashboard and inspect auth me response</td><td>Customer logged in with selected services</td><td>None</td><td>availableServices includes package metadata</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-033</td><td>Customer</td><td>Customer logout</td><td>Click logout in customer portal</td><td>Customer logged in</td><td>None</td><td>Cookie cleared and redirected to login</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-034</td><td>Customer</td><td>Create delegate by customer</td><td>POST delegates route with roleToCreate delegate</td><td>Customer logged in</td><td>Unique delegate email</td><td>Delegate user created</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-035</td><td>Customer</td><td>Create delegate user by delegate</td><td>Login as delegate and create user</td><td>Delegate logged in</td><td>Unique delegate_user email</td><td>delegate_user created with createdByDelegate set</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-036</td><td>Customer</td><td>Create delegate user by customer with parent</td><td>Customer creates delegate_user and sends parentDelegateId</td><td>Delegate exists under customer</td><td>parentDelegateId valid id</td><td>User created and linked to parent delegate</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-037</td><td>Customer</td><td>Create delegate user missing parent id</td><td>Customer creates delegate_user without parentDelegateId</td><td>Customer logged in</td><td>roleToCreate delegate_user no parent id</td><td>400 missing parent delegate error</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-038</td><td>Customer</td><td>Switch team role</td><td>PATCH delegates with action switch_role</td><td>Target user exists under customer</td><td>targetRole delegate or delegate_user</td><td>Role updated and history appended</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-039</td><td>Customer</td><td>Deactivate team member</td><td>PATCH delegates with action deactivate</td><td>Target member active</td><td>reason text length greater than 5</td><td>isActive false and sessionVersion incremented</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-040</td><td>Customer</td><td>Reactivation by role switch</td><td>Switch role on previously deactivated account</td><td>Target account is inactive</td><td>switch_role payload</td><td>Account becomes active and can login again</td><td>Positive</td><td>Medium</td></tr>
+
+  <tr><td colspan='9' class='cat'>Order Creation and Enterprise Decision Flow</td></tr>
+  <tr><td>TC-041</td><td>Customer</td><td>Create order success</td><td>Create order with candidate details and allowed services</td><td>Customer logged in and services assigned</td><td>candidate name email phone plus service ids</td><td>Request created with pending statuses</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-042</td><td>Customer</td><td>Create order with no selected service</td><td>Submit order without services for service enabled customer</td><td>Customer has selectedServices</td><td>Empty selectedServiceIds</td><td>400 select at least one service</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-043</td><td>Customer</td><td>Create order with disallowed service id</td><td>Send service id not present in customer selectedServices</td><td>Customer logged in</td><td>Unauthorized service id</td><td>400 selected service not allowed</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-044</td><td>Customer</td><td>Package expansion at order create</td><td>Create order selecting package service</td><td>Package configured with regular services</td><td>Package service id</td><td>selectedServices stored as expanded regular services</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-045</td><td>Customer</td><td>Candidate account auto create</td><td>Create order with new candidate email</td><td>Email not used in user collection</td><td>new candidate email</td><td>Candidate user created and temp password generated</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-046</td><td>Customer</td><td>Candidate email role conflict notice</td><td>Create order where candidate email already belongs to non candidate role</td><td>Email exists as admin or customer</td><td>existing non candidate email</td><td>Order saves but response warns candidate login not enabled</td><td>Negative</td><td>Medium</td></tr>
+  <tr><td>TC-047</td><td>Customer</td><td>Invite email success path</td><td>Create order with valid SMTP configured</td><td>SMTP env values set correctly</td><td>valid candidate email</td><td>Response says candidate email sent successfully</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-048</td><td>Customer</td><td>Invite email failure fallback</td><td>Create order with SMTP disabled</td><td>SMTP vars missing or invalid</td><td>valid order payload</td><td>Order saved and response reports email not sent</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-049</td><td>Customer</td><td>Enterprise approve request</td><td>PATCH orders with action enterprise-approve</td><td>Candidate form already submitted</td><td>request id</td><td>Status set to approved and approval timestamp saved</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-050</td><td>Customer</td><td>Enterprise reject request in window</td><td>Reject approved request inside 10 minute window</td><td>Request just approved</td><td>action enterprise-reject plus note</td><td>Status changed to rejected</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-051</td><td>Customer</td><td>Enterprise reject after lock window</td><td>Reject approved request after cutoff time</td><td>approved request older than 10 minutes and locked</td><td>action enterprise-reject</td><td>400 request is locked</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-052</td><td>Customer</td><td>Reject selected candidate fields</td><td>PATCH orders with action reject-candidate-data and selected fields</td><td>Candidate form submitted</td><td>serviceId and question list</td><td>Status rejected and candidateFormStatus pending and correction email sent or attempted</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-053</td><td>Customer</td><td>Reject selected fields invalid question</td><td>Send question not present in candidate responses</td><td>Candidate responses exist</td><td>Invalid field question</td><td>400 selected field invalid</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-054</td><td>Customer</td><td>Update rejected request and resend invite</td><td>PATCH orders with update payload on rejected request</td><td>Request status rejected</td><td>updated candidate data plus service ids</td><td>Request reset to pending and candidate email trigger attempted</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-055</td><td>Customer</td><td>Update non rejected request blocked</td><td>Try update payload when request status is pending or approved</td><td>Non rejected request exists</td><td>request id and payload</td><td>400 only rejected requests can be edited</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-056</td><td>Customer</td><td>Orders list decision metadata</td><td>GET orders list from customer dashboard</td><td>Orders exist</td><td>None</td><td>Response includes enterpriseDecisionRemainingMs and lock flags</td><td>Positive</td><td>Medium</td></tr>
+
+  <tr><td colspan='9' class='cat'>Candidate Features and Form Validation</td></tr>
+  <tr><td>TC-057</td><td>Candidate</td><td>Candidate login success</td><td>Sign in from candidate portal</td><td>Candidate user exists</td><td>candidate email and password</td><td>Cookie set and dashboard opens</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-058</td><td>Candidate</td><td>Candidate login wrong credentials</td><td>Login with invalid password</td><td>Candidate exists</td><td>wrong password</td><td>401 invalid credentials</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-059</td><td>Candidate</td><td>Candidate me endpoint</td><td>Load candidate dashboard and call me route</td><td>Candidate logged in</td><td>Valid candidate cookie</td><td>Candidate identity returned with role candidate</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-060</td><td>Candidate</td><td>Candidate logout</td><td>Click candidate logout</td><td>Candidate logged in</td><td>None</td><td>Candidate cookie cleared</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-061</td><td>Candidate</td><td>Candidate change password</td><td>Submit current and new password from settings</td><td>Candidate logged in</td><td>current plus new pass</td><td>Password updated and login with new password works</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-062</td><td>Candidate</td><td>Candidate list own requests only</td><td>Call GET requests as candidate with multiple candidate records in db</td><td>At least two candidate identities exist</td><td>Candidate A login</td><td>Only requests for candidate A returned</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-063</td><td>Candidate</td><td>Submit candidate form success</td><td>PATCH requests with valid responses for all required fields</td><td>Request status pending and candidate owns request</td><td>valid answers and files</td><td>candidateFormStatus submitted and timestamp set</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-064</td><td>Candidate</td><td>Submit missing required text field</td><td>Leave required text field empty in PATCH payload</td><td>Required text field exists</td><td>blank value for required question</td><td>400 field required validation error</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-065</td><td>Candidate</td><td>Submit invalid number field</td><td>Send non numeric string for number field</td><td>Number field exists</td><td>value abc</td><td>400 valid number message returned</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-066</td><td>Candidate</td><td>Submit invalid date field</td><td>Send non ISO date value</td><td>Date field exists</td><td>value 2026-99-99</td><td>400 valid date message returned</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-067</td><td>Candidate</td><td>File upload valid mime and size</td><td>Submit pdf or jpeg file less than 5MB</td><td>File type question exists</td><td>application/pdf and size less than 5MB</td><td>File metadata and data saved in response set</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-068</td><td>Candidate</td><td>File upload invalid mime blocked</td><td>Submit unsupported mime type</td><td>File question exists</td><td>text/plain</td><td>400 only PDF JPG PNG allowed</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-069</td><td>Candidate</td><td>File upload oversize blocked</td><td>Submit file size over 5MB</td><td>File question exists</td><td>size 5242881 bytes</td><td>400 file size must be 5MB or less</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-070</td><td>Candidate</td><td>Editing blocked after approval</td><td>Try PATCH requests when request status is approved</td><td>Request approved by enterprise</td><td>Any update payload</td><td>400 approved or verified cannot be edited</td><td>Negative</td><td>High</td></tr>
+
+  <tr><td colspan='9' class='cat'>Verification and Reporting</td></tr>
+  <tr><td>TC-071</td><td>Admin</td><td>Verifier logs service attempt</td><td>PATCH admin requests verify-service for one service</td><td>Request approved and candidate submitted</td><td>serviceStatus verified or unverified</td><td>Attempt appended with verifier and manager details</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-072</td><td>Admin</td><td>Verify blocked before candidate submit</td><td>Try verify-service when candidateFormStatus pending</td><td>Request exists with pending candidate form</td><td>verify-service payload</td><td>400 candidate form not submitted yet</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-073</td><td>Admin</td><td>Verify blocked before enterprise approve</td><td>Try verify-service when status pending</td><td>Candidate submitted but not approved</td><td>verify-service payload</td><td>400 must be approved by enterprise</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-074</td><td>Admin</td><td>Request marked verified after all services resolved</td><td>Log verify-service for each selected service</td><td>Approved request with multiple services</td><td>Complete all services with verified or unverified</td><td>Request status changes to verified</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-075</td><td>Admin</td><td>Generate report success</td><td>POST report route for verified request</td><td>Request status verified</td><td>Verified request id</td><td>reportMetadata reportData and invoiceSnapshot saved</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-076</td><td>Admin</td><td>Generate report blocked before verified</td><td>POST report route for non verified request</td><td>Request status pending or approved</td><td>request id</td><td>400 report generation only after verification complete</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-077</td><td>Admin</td><td>Download generated report</td><td>GET report download route after report generated</td><td>reportData exists</td><td>request id</td><td>PDF file response with attachment headers</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-078</td><td>Admin</td><td>Download report before generation</td><td>GET report route with no reportData</td><td>No report generated</td><td>request id</td><td>404 no generated report found</td><td>Negative</td><td>Medium</td></tr>
+
+  <tr><td colspan='9' class='cat'>Security Access Control and Session Isolation</td></tr>
+  <tr><td>TC-079</td><td>Cross Portal</td><td>Unauthorized without cookie</td><td>Call protected endpoint without auth cookie</td><td>No login</td><td>GET protected route</td><td>401 unauthorized</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-080</td><td>Cross Portal</td><td>Portal cookie isolation</td><td>Login to one portal and access another portal protected endpoint</td><td>One portal cookie only</td><td>Admin cookie used on customer route</td><td>Unauthorized due different token name and payload</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-081</td><td>Customer</td><td>SessionVersion invalidates old token</td><td>Login delegate then deactivate account then reuse old cookie</td><td>Delegate account available</td><td>Old delegate cookie</td><td>Auth fails after sessionVersion increment</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-082</td><td>Customer</td><td>Delegate user request scope</td><td>Login as delegate_user and fetch orders</td><td>Delegate user has own created request</td><td>delegate_user credentials</td><td>Only own requests visible</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-083</td><td>Customer</td><td>Delegate request scope includes managed users</td><td>Login as delegate and fetch orders</td><td>Delegate has delegate_user members</td><td>delegate credentials</td><td>Shows delegate and managed member requests only</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-084</td><td>Admin</td><td>Verifier company scope enforced</td><td>Verifier tries to verify request from unassigned company</td><td>Verifier assigned to limited companies</td><td>request id from other company</td><td>401 unauthorized</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-085</td><td>Admin</td><td>Manager company scope enforced</td><td>Manager reads requests outside managed company scope</td><td>Manager assigned specific companies</td><td>out of scope request id</td><td>No access to out of scope data</td><td>Negative</td><td>High</td></tr>
+
+  <tr><td colspan='9' class='cat'>Profile and Configuration Features</td></tr>
+  <tr><td>TC-086</td><td>Customer</td><td>Partner profile read</td><td>Open settings profile and load data</td><td>Customer or delegate logged in</td><td>Existing profile data optional</td><td>Profile object returned with normalized defaults</td><td>Positive</td><td>Medium</td></tr>
+  <tr><td>TC-087</td><td>Customer</td><td>Partner profile update success</td><td>PATCH profile with full valid payload</td><td>Customer or delegate logged in</td><td>Company info invoicing and contact payload</td><td>Profile saved and updatedAt changed</td><td>Positive</td><td>High</td></tr>
+  <tr><td>TC-088</td><td>Customer</td><td>Partner profile validation required fields</td><td>Submit profile missing required values</td><td>Profile form accessible</td><td>Missing companyName or invoiceEmail</td><td>400 with validation message</td><td>Negative</td><td>High</td></tr>
+  <tr><td>TC-089</td><td>Customer</td><td>Partner profile document limit</td><td>Submit more than five company documents</td><td>Profile edit open</td><td>6 document entries</td><td>Validation error for max documents</td><td>Negative</td><td>Medium</td></tr>
+  <tr><td>TC-090</td><td>Customer</td><td>Billing address copy when same as company</td><td>Set billingSameAsCompany true and save</td><td>Profile form available</td><td>Different invoice address in payload</td><td>Invoice address stored equal to company address</td><td>Positive</td><td>Medium</td></tr>
+
+</table>
+</body>
+</html>
