@@ -118,12 +118,17 @@ export default function ReportReadyPage() {
             ))}
 
             {/* Disclaimer */}
-            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "1rem", fontSize: "0.75rem", color: "#94a3b8", lineHeight: 1.6 }}>
-              <p style={{ margin: "0 0 0.5rem" }}>
-                <strong>Disclaimer:</strong> The Cluso Report is provided by CLUSO INFOLINK, LLC. CLUSO INFOLINK, LLC does not warrant the completeness or correctness of this report or any of the information contained herein.
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "1.2rem", fontSize: "0.75rem", color: "#64748b", lineHeight: 1.6, marginTop: "1.5rem" }}>
+              <div style={{ textAlign: "center", fontWeight: "700", color: "#475569", marginBottom: "0.8rem", letterSpacing: "0.05em" }}>--END OF REPORT--</div>
+              <div style={{ fontWeight: "700", color: "#475569", marginBottom: "0.5rem" }}>IMPORTANT NOTICE & DISCLAIMER</div>
+              <p style={{ margin: "0 0 0.75rem" }}>
+                This report is provided by CLUSO INFOLINK PRIVATE LIMITED on a strictly confidential basis, solely for the exclusive use of the recipient for legitimate corporate and business purposes. It may not be reproduced, redistributed, or disclosed, in whole or in part, in any manner whatsoever without prior written consent.
+              </p>
+              <p style={{ margin: "0 0 0.75rem" }}>
+                While CLUSO INFOLINK PRIVATE LIMITED endeavors to ensure the highest level of accuracy and diligence in procuring, collecting, and compiling this data, it does not warrant or guarantee the absolute completeness, correctness, or timeliness of the information contained herein. Consequently, CLUSO INFOLINK PRIVATE LIMITED shall not be held liable for any direct, indirect, or consequential loss, damage, or injury resulting from any errors, omissions, or negligence in the procurement or communication of this information. Reliance upon this report is strictly at the user's sole risk.
               </p>
               <p style={{ margin: 0 }}>
-                This report is furnished in strict confidence for your exclusive use of legitimate business purposes and for no other purpose. CLUSO INFOLINK is a private investigation company licensed by the Texas Private Security Bureau (TX License Number A16821).
+                The recipient acknowledges that the handling and utilization of this data must strictly align with all prevailing Indian regulatory frameworks, including but not limited to the Digital Personal Data Protection Act, 2023 (DPDP Act) and the Information Technology Act, 2000, along with all subsequent amendments and rules.
               </p>
             </div>
           </div>
