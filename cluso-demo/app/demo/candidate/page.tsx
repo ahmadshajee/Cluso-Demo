@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { candidateUser } from "@/lib/demoData";
 
 export default function CandidateDashboardPage() {
@@ -30,6 +31,11 @@ export default function CandidateDashboardPage() {
         subtitle=""
         activeNavLabel="Dashboard"
       >
+        <DemoCallout items={[
+          { title: "Candidate Portal", text: "This is the candidate's view. After receiving an invite email, the candidate logs in to complete verification forms and upload documents.", arrow: "down" },
+          { title: "Pending Forms", text: "Shows how many verification forms still need to be filled out. The candidate clicks here to start completing them.", arrow: "down" },
+          { title: "Verification Activity", text: "A feed showing the latest requests and their current status — whether forms are pending, approved by enterprise, or fully verified.", arrow: "down" },
+        ]} />
         <div className="dashboard-header">
           <h2>Dashboard</h2>
           <div className="top-actions">

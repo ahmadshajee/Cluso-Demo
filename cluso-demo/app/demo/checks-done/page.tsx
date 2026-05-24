@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, Clock, Shield, AlertCircle, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { adminUser, demoRequests } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -32,6 +33,11 @@ export default function ChecksDonePage() {
         subtitle="View verification progress and mark requests as complete."
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "Verification Status", text: "This dialog shows the verification progress for each service. Green = verified, blue = still in progress.", arrow: "down" },
+          { title: "Service-Level Tracking", text: "Each service is tracked independently. The verifier's name, date, respondent info, and comments are recorded per attempt.", arrow: "down" },
+          { title: "Mark as Verified", text: "Once all services are verified, the admin marks the entire request as 'Verified' and a final report can be generated.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.2rem", opacity: showDialog ? 0.4 : 1, pointerEvents: showDialog ? "none" : "auto" }}>
           <div className="request-list">
             {approvedRequests.map((request) => (

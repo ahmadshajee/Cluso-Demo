@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ListChecks, Search, ChevronDown, ChevronUp, User, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, demoRequests } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -30,6 +31,11 @@ export default function HRReviewsPage() {
         subtitle="Track pending, enterprise decisions, and verified items."
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "HR Review Queue", text: "Enterprise HR reviews each candidate's submitted forms and documents. Click any row to expand and see full details.", arrow: "down" },
+          { title: "Candidate Details", text: "The expanded view shows the candidate's personal info, contact details, and which verification services were requested.", arrow: "down" },
+          { title: "Approve / Reject", text: "HR can approve the request (sends it to admin for verification) or reject it (sends it back to the candidate for corrections).", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.2rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
             <h3 className="block-title"><ListChecks size={18} /> All Requests</h3>

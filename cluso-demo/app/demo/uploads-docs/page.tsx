@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Upload, CheckCircle2, FileText, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { candidateUser, uploadedDocuments } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -26,6 +27,11 @@ export default function UploadsDocsPage() {
         subtitle="Upload supporting documents for your verification."
         activeNavLabel="Forms to Fill"
       >
+        <DemoCallout items={[
+          { title: "Document Upload", text: "Candidates upload supporting documents like ID cards, degree certificates, experience letters, and payslips for verification.", arrow: "down" },
+          { title: "File Validation", text: "The system accepts PDF, PNG, JPG, and WEBP files up to 5 MB each. Uploaded files are shown with a green checkmark.", arrow: "down" },
+          { title: "Submission", text: "Once all required documents are uploaded, the candidate submits them. The request then moves to the HR review queue.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.2rem" }}>
             <span className="icon-chip"><Upload size={14} /></span>

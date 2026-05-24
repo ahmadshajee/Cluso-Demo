@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CheckCheck } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser } from "@/lib/demoData";
 
 export default function DeliveredPage() {
@@ -17,6 +18,11 @@ export default function DeliveredPage() {
         subtitle="Use quick actions to complete one task at a time with less clutter."
         activeNavLabel="Overview"
       >
+        <DemoCallout items={[
+          { title: "Report Delivered", text: "The company HR receives a notification that the verification report is ready. They can view it directly from the notification panel.", arrow: "down" },
+          { title: "Notification System", text: "Real-time notifications alert HR about new requests, approvals, completed verifications, and delivered reports.", arrow: "down" },
+          { title: "One-Click Access", text: "Each notification links directly to the relevant page — click to view the full report, check a request, or review an order.", arrow: "down" },
+        ]} />
         {/* Simplified stat cards */}
         <div className="portal-stats-grid">
           {[

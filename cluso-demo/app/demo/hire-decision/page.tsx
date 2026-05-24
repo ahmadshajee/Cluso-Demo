@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { CheckCircle2, Shield, ArrowLeft } from "lucide-react";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 
 export default function HireDecisionPage() {
   return (
     <>
       <DemoStepIndicator currentSlug="hire-decision" />
       <div className="hire-decision-page" style={{ background: "linear-gradient(135deg, #f0f4ff 0%, #f8f9fc 40%, #f0fff4 100%)" }}>
+        <DemoCallout items={[
+          { title: "Process Complete", text: "The entire background verification workflow is finished. All services have been checked, attempts logged, and the report delivered.", arrow: "down" },
+          { title: "Enterprise Decision", text: "Cluso's work ends here. The hiring decision now rests entirely with the company HR based on the verified report.", arrow: "down" },
+          { title: "Full Audit Trail", text: "Every step — from order creation to final report — is recorded with timestamps, respondent details, and verifier comments.", arrow: "down" },
+        ]} />
         <div className="hire-decision-card">
           <div className="hire-decision-icon">🎯</div>
           <h1 className="hire-decision-title">Our Work is Done</h1>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FileSignature, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { candidateUser, candidateFormFields } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -32,6 +33,11 @@ export default function FillsFormsPage() {
         subtitle="Fill out the required verification forms below."
         activeNavLabel="Forms to Fill"
       >
+        <DemoCallout items={[
+          { title: "Dynamic Forms", text: "Each verification service generates its own set of form fields. These questions are configured by the admin when setting up services.", arrow: "down" },
+          { title: "Pre-filled Data", text: "Some fields may be pre-filled from the candidate's profile. The candidate reviews and corrects any data before submitting.", arrow: "down" },
+          { title: "Save & Submit", text: "Candidates can save a draft to return later, or submit the form when complete. Submitted forms cannot be edited unless rejected by HR.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
             <span className="icon-chip"><FileSignature size={14} /></span>

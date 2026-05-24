@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ListChecks, RotateCw, FileText, AlertCircle } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, demoRequests } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -24,6 +25,11 @@ export default function CompanyHRReviewPage() {
         subtitle="Review verified requests, view reports, and file appeals."
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "Report Access", text: "Once verification is complete, HR can view the full report, download a PDF copy, or share it with stakeholders.", arrow: "down" },
+          { title: "PDF Download", text: "The system generates a professional PDF report with all candidate answers, verification attempts, and respondent confirmations.", arrow: "down" },
+          { title: "Reverification Appeal", text: "If HR disagrees with any finding, they can file an appeal for re-verification. The admin team will re-investigate the flagged services.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.2rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
             <h3 className="block-title"><ListChecks size={18} /> Requests</h3>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, XCircle, AlertTriangle, ListChecks } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, demoRequests } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -36,6 +37,11 @@ export default function ApprovedPage() {
         subtitle="Track pending, enterprise decisions, and verified items."
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "Enterprise Decision", text: "This dialog confirms the HR's approve or reject decision. The candidate info and services are summarized for review.", arrow: "down" },
+          { title: "10-Minute Window", text: "After approving, HR has a strict 10-minute window to reverse the decision. After that, the request is locked.", arrow: "down" },
+          { title: "Decision Notes", text: "HR can attach an optional note explaining their decision. This is recorded for audit trails.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.2rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
             <h3 className="block-title"><ListChecks size={18} /> All Requests</h3>

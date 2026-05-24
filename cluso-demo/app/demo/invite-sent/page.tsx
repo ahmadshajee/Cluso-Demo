@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ListChecks, Search } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, demoRequests } from "@/lib/demoData";
 
 const requestToStep: Record<string, string> = {
@@ -32,6 +33,11 @@ export default function InviteSentPage() {
         subtitle="Track pending, enterprise decisions, and verified items."
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "Invite Email Sent", text: "After submitting an order, the system automatically sends an invite email to the candidate with temporary login credentials.", arrow: "down" },
+          { title: "Request List", text: "All verification requests for this company are listed here. Each row shows the candidate name, services, date, and current status.", arrow: "down" },
+          { title: "Status Tracking", text: "Status pills (pending, approved, verified, rejected) and form status let HR track progress at a glance.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.2rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", gap: "0.5rem", flexWrap: "wrap" }}>
             <h3 className="block-title"><ListChecks size={18} /> All Requests</h3>

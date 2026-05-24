@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { adminUser, demoRequests } from "@/lib/demoData";
 
 export default function AdminDashboardPage() {
@@ -47,6 +48,11 @@ export default function AdminDashboardPage() {
         subtitle="Use dedicated sections to manage requests, services, teams, and companies without clutter."
         activeNavLabel="Overview"
       >
+        <DemoCallout items={[
+          { title: "Admin Portal", text: "This is the Cluso admin's central hub. Admins oversee all verification requests across every company on the platform.", arrow: "down" },
+          { title: "Platform Metrics", text: "Live counts of pending, approved, verified, and rejected requests — plus total services, companies, verifiers, and admins.", arrow: "down" },
+          { title: "Quick Actions", text: "Shortcuts to review request queues, manage company access, configure services, and set team permissions.", arrow: "down" },
+        ]} />
         <section className="portal-stats-grid" aria-label="Admin overview metrics">
           {cards.map((item) => {
             const Icon = item.icon;

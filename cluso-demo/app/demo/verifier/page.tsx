@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ListChecks, Sparkles, User, Mail, Send } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { adminUser, verifierUser, demoRequests } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -36,6 +37,11 @@ export default function VerifierPage() {
         subtitle={`Logged in as verifier: ${verifierUser.name}`}
         activeNavLabel="Requests"
       >
+        <DemoCallout items={[
+          { title: "Verifier Workspace", text: "Verifiers see only approved requests assigned to them. They conduct background checks by contacting employers, universities, and references.", arrow: "down" },
+          { title: "Verification Attempt", text: "For each service, the verifier logs who they contacted, the verification mode (manual/email/phone), and their findings.", arrow: "down" },
+          { title: "Service-Level Checks", text: "Each service is verified independently. The verifier records the respondent's name, email, and comments for the audit trail.", arrow: "down" },
+        ]} />
         <div className="verifier-workspace">
           <div className="block-card" style={{ padding: "1.2rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>

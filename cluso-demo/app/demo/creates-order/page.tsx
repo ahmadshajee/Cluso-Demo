@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ClipboardPlus, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, services } from "@/lib/demoData";
 import { useState } from "react";
 
@@ -37,6 +38,11 @@ export default function CreatesOrderPage() {
         subtitle="Submit candidate verification requests with assigned services."
         activeNavLabel="Orders"
       >
+        <DemoCallout items={[
+          { title: "Order Form", text: "The HR user fills in the candidate's name, email, and phone number. These details are used to send the candidate an invite.", arrow: "down" },
+          { title: "Service Selection", text: "HR picks which background check services to run — Employment, Education, Address, Criminal, or Reference checks.", arrow: "down" },
+          { title: "Package Bundles", text: "Services can be grouped into packages (e.g. 'Comprehensive BGV') so HR can select multiple checks with one click.", arrow: "down" },
+        ]} />
         <div className="block-card" style={{ padding: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.2rem" }}>
             <span className="icon-chip"><ClipboardPlus size={14} /></span>

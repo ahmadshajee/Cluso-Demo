@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { DemoCallout } from "@/components/DemoCallout";
 import { customerUser, demoRequests } from "@/lib/demoData";
 
 export default function CompanyHRPage() {
@@ -39,6 +40,11 @@ export default function CompanyHRPage() {
         subtitle="Use quick actions to complete one task at a time with less clutter."
         activeNavLabel="Overview"
       >
+        <DemoCallout items={[
+          { title: "Enterprise Dashboard", text: "This is the Company HR portal. The enterprise user sees an overview of all verification requests they've created.", arrow: "down" },
+          { title: "Stat Cards", text: "Each card shows a live count of requests by status — Pending, Approved, Rejected, Verified, and Total.", arrow: "down" },
+          { title: "Quick Actions", text: "One-click shortcuts to create orders, review requests, or manage team access without navigating through menus.", arrow: "down" },
+        ]} />
         <section className="portal-stats-grid" aria-label="Request overview">
           {cards.map((card) => {
             const Icon = card.icon;
