@@ -1,0 +1,71 @@
+"use client";
+
+import { FileSignature, Sparkles } from "lucide-react";
+import { DemoPortalFrame } from "@/components/DemoPortalFrame";
+import { DemoStepIndicator } from "@/components/DemoStepIndicator";
+import { candidateUser, candidateFormFields } from "@/lib/demoData";
+
+export default function FillsFormsPage() {
+  return (
+    <>
+      <DemoStepIndicator currentSlug="fills-forms" />
+      <DemoPortalFrame
+        portal="candidate"
+        userName={candidateUser.name}
+        title="Complete Your Forms"
+        subtitle="Fill out the required verification forms below."
+        activeNavLabel="Forms to Fill"
+      >
+        <div className="block-card" style={{ padding: "1.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+            <span className="icon-chip"><FileSignature size={14} /></span>
+            <h2 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700 }}>Employment Verification Form</h2>
+            <span className="demo-label"><Sparkles size={11} /> Demo</span>
+          </div>
+          <p className="block-subtitle" style={{ marginBottom: "1.2rem" }}>
+            Requested by <strong>TechVista Solutions Pvt. Ltd.</strong>
+          </p>
+
+          <div className="form-section" style={{ marginBottom: "1rem" }}>
+            <h3 className="form-section-title">📋 Employment Details</h3>
+            <div className="form-grid">
+              {candidateFormFields.employmentVerification.map((field, i) => (
+                <div key={i} className="form-field">
+                  <label className="label">{field.question}</label>
+                  <input
+                    className="input"
+                    type={field.fieldType === "date" ? "date" : field.fieldType === "email" ? "email" : "text"}
+                    defaultValue={field.value}
+                    readOnly
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="form-section">
+            <h3 className="form-section-title">👤 Personal Details</h3>
+            <div className="form-grid">
+              {candidateFormFields.personalDetails.map((field, i) => (
+                <div key={i} className="form-field">
+                  <label className="label">{field.question}</label>
+                  <input
+                    className="input"
+                    type={field.fieldType === "date" ? "date" : field.fieldType === "email" ? "email" : "text"}
+                    defaultValue={field.value}
+                    readOnly
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
+            <button className="btn btn-secondary" type="button">Save Draft</button>
+            <button className="btn btn-primary" type="button">Submit Form</button>
+          </div>
+        </div>
+      </DemoPortalFrame>
+    </>
+  );
+}
