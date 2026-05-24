@@ -413,7 +413,7 @@ export function DemoPortalFrame({
       <main className="admin-main">
         {!focusMode ? (
             <header className="admin-topbar">
-            <div className="portal-topbar-leading" style={{ display: "flex", alignItems: "center", gap: "0.65rem", minWidth: 0, flex: 1 }}>
+            <div className="portal-topbar-leading" style={{ display: "flex", alignItems: "center", gap: "0.65rem", minWidth: 0, flex: 1, overflow: "hidden" }}>
               <button
                 type="button"
                 className="portal-nav-overflow-trigger"
