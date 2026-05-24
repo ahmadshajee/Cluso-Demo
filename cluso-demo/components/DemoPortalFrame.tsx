@@ -53,7 +53,7 @@ type NavItem = {
 
 const customerNav: NavItem[] = [
   {
-    href: "/",
+    href: "/demo/company-hr",
     label: "Overview",
     icon: LayoutDashboard,
     description: "Get a bird's-eye view of your candidate progress, recent activity, and overall health metrics.",
@@ -67,7 +67,7 @@ const customerNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/creates-order",
     label: "Orders",
     icon: Clipboard,
     description: "Place new verification orders and track the fulfillment of individual candidate background reports.",
@@ -81,7 +81,7 @@ const customerNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/hr-reviews",
     label: "Requests",
     icon: ListChecks,
     description: "Review detailed candidate form submissions, evaluate enterprise decisions, and track verifications.",
@@ -95,7 +95,7 @@ const customerNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/delivered",
     label: "Invoices",
     icon: ReceiptText,
     description: "Access your billing history, download comprehensive invoices, and manage payment receipts safely.",
@@ -109,7 +109,7 @@ const customerNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/company-hr",
     label: "Team",
     icon: Users,
     description: "Manage your enterprise organization members, configure their roles, and set collaboration boundaries.",
@@ -123,7 +123,7 @@ const customerNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/company-hr",
     label: "Settings",
     icon: Settings,
     description: "Configure notifications, update company profiling securely, and tailor your platform experience.",
@@ -140,7 +140,7 @@ const customerNav: NavItem[] = [
 
 const candidateNav: NavItem[] = [
   {
-    href: "/",
+    href: "/demo/candidate",
     label: "Dashboard",
     icon: LayoutDashboard,
     description: "Monitor your overall background screening progress and see required actions.",
@@ -154,7 +154,7 @@ const candidateNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/fills-forms",
     label: "Forms to Fill",
     icon: FileSignature,
     description: "Complete assigned verification forms, submit necessary documents, and sign disclosures.",
@@ -168,7 +168,7 @@ const candidateNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/uploads-docs",
     label: "History",
     icon: ListChecks,
     description: "Access your verification history and review past background screening checks.",
@@ -182,7 +182,7 @@ const candidateNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/candidate",
     label: "Profile",
     icon: UserRound,
     description: "Manage your profile, work history, education details, and account security.",
@@ -196,7 +196,7 @@ const candidateNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/candidate",
     label: "Settings",
     icon: Settings,
     description: "Adjust notification preferences, security, and account details.",
@@ -213,7 +213,7 @@ const candidateNav: NavItem[] = [
 
 const adminNav: NavItem[] = [
   {
-    href: "/",
+    href: "/demo/admin",
     label: "Overview",
     icon: LayoutDashboard,
     description: "Get a bird's-eye view of your enterprise metrics, recent activity, and platform health.",
@@ -227,7 +227,7 @@ const adminNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/verifier",
     label: "Requests",
     icon: ShieldCheck,
     description: "Review detailed candidate form submissions, evaluate enterprise decisions, and track verifications.",
@@ -241,7 +241,7 @@ const adminNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/checks-done",
     label: "Services",
     icon: BriefcaseBusiness,
     description: "Configure verification service offerings, custom checks, and specific client integrations.",
@@ -255,7 +255,7 @@ const adminNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/admin",
     label: "Companies",
     icon: Building,
     description: "Manage client organizations, their sub-accounts, and view active enterprise relationships.",
@@ -269,7 +269,7 @@ const adminNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/admin",
     label: "Team",
     icon: Users,
     description: "Manage admin users, configure member permission levels, and secure platform access.",
@@ -283,7 +283,7 @@ const adminNav: NavItem[] = [
     },
   },
   {
-    href: "/",
+    href: "/demo/admin",
     label: "Settings",
     icon: Settings,
     description: "Adjust system preferences, authentication parameters, and core profile details.",
@@ -412,8 +412,8 @@ export function DemoPortalFrame({
 
       <main className="admin-main">
         {!focusMode ? (
-          <header className="admin-topbar">
-            <div className="portal-topbar-leading" style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+            <header className="admin-topbar">
+            <div className="portal-topbar-leading" style={{ display: "flex", alignItems: "center", gap: "0.65rem", minWidth: 0, flex: 1 }}>
               <button
                 type="button"
                 className="portal-nav-overflow-trigger"
@@ -422,16 +422,16 @@ export function DemoPortalFrame({
               >
                 <Menu size={18} />
               </button>
-              <div style={{ display: "grid", gap: "0.15rem" }}>
-                <h1 className="admin-topbar-title">{title || "Enterprise Panel"}</h1>
+              <div style={{ display: "grid", gap: "0.15rem", minWidth: 0 }}>
+                <h1 className="admin-topbar-title" style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{title || "Enterprise Panel"}</h1>
                 {subtitle ? (
-                  <p style={{ margin: 0, color: "#6B7A90", fontSize: "0.85rem" }}>{subtitle}</p>
+                  <p style={{ margin: 0, color: "#6B7A90", fontSize: "0.85rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{subtitle}</p>
                 ) : null}
               </div>
             </div>
-            <div className="account-actions-wrap">
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 500 }}>
-                <User size={18} />
+            <div className="account-actions-wrap" style={{ flexShrink: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 500, whiteSpace: "nowrap" }}>
+                <User size={18} style={{ flexShrink: 0 }} />
                 {userName}
               </div>
               <button className="logout-btn" type="button" onClick={() => {}}>

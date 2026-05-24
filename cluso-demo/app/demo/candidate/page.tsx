@@ -12,10 +12,9 @@ import {
 } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
-import { candidateUser, demoRequests } from "@/lib/demoData";
+import { candidateUser } from "@/lib/demoData";
 
 export default function CandidateDashboardPage() {
-  const candidateRequests = demoRequests.filter((r) => r.candidateEmail === candidateUser.email || r.candidateName === candidateUser.name);
   const pendingFormsCount = 2;
   const inReviewCount = 1;
   const verifiedCount = 1;
@@ -35,12 +34,12 @@ export default function CandidateDashboardPage() {
           <h2>Dashboard</h2>
           <div className="top-actions">
             <Link href="/demo/fills-forms" className="btn btn-green">Forms to fill</Link>
-            <button className="btn btn-blue" type="button">History</button>
+            <Link href="/demo/uploads-docs" className="btn btn-blue">History</Link>
           </div>
         </div>
 
         <div className="portal-stats-grid">
-          <div className="portal-stat portal-stat-sky">
+          <Link href="/demo/fills-forms" className="portal-stat portal-stat-sky" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
               <div className="portal-stat-icon-wrap"><FileText size={24} /></div>
               <div className="portal-stat-info">
@@ -48,9 +47,9 @@ export default function CandidateDashboardPage() {
                 <span className="portal-stat-label" style={{ margin: 0 }}>Pending Forms</span>
               </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="portal-stat portal-stat-amber">
+          <Link href="/demo/hr-reviews" className="portal-stat portal-stat-amber" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
               <div className="portal-stat-icon-wrap"><Clock3 size={24} /></div>
               <div className="portal-stat-info">
@@ -58,9 +57,9 @@ export default function CandidateDashboardPage() {
                 <span className="portal-stat-label" style={{ margin: 0 }}>In Review</span>
               </div>
             </div>
-          </div>
+          </Link>
 
-          <div className="portal-stat portal-stat-emerald">
+          <Link href="/demo/report-ready" className="portal-stat portal-stat-emerald" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
               <div className="portal-stat-icon-wrap"><CheckCircle2 size={24} /></div>
               <div className="portal-stat-info">
@@ -68,7 +67,7 @@ export default function CandidateDashboardPage() {
                 <span className="portal-stat-label" style={{ margin: 0 }}>Verified</span>
               </div>
             </div>
-          </div>
+          </Link>
 
           <div className="portal-stat portal-stat-rose">
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
@@ -84,18 +83,18 @@ export default function CandidateDashboardPage() {
         <div className="quick-actions-section">
           <h3>Quick Actions</h3>
           <div className="quick-actions-grid">
-            <Link href="/demo/fills-forms" className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center" }}>
+            <Link href="/demo/fills-forms" className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center", textDecoration: "none", color: "inherit" }}>
               <FileSignature size={28} />
               <span style={{ fontWeight: 600 }}>Complete Forms</span>
             </Link>
-            <div className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center" }}>
+            <Link href="/demo/uploads-docs" className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center", textDecoration: "none", color: "inherit" }}>
               <ListChecks size={28} />
               <span style={{ fontWeight: 600 }}>Track Verification</span>
-            </div>
-            <div className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center" }}>
+            </Link>
+            <Link href="/demo/candidate" className="quick-action-card" style={{ alignItems: "center", textAlign: "center", justifyItems: "center", textDecoration: "none", color: "inherit" }}>
               <SlidersHorizontal size={28} />
               <span style={{ fontWeight: 600 }}>Profile</span>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -104,11 +103,11 @@ export default function CandidateDashboardPage() {
           <p className="block-subtitle">Recent candidate tasks and current review state.</p>
           <div className="recent-request-list">
             {[
-              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Education Verification, Address Verification", status: "pending", formStatus: "form pending", date: "20/5/2026" },
-              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Criminal Record Check", status: "approved", formStatus: "approved by enterprise", date: "18/5/2026" },
-              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Education Verification, Reference Check", status: "verified", formStatus: "verified", date: "15/5/2026" },
+              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Education Verification, Address Verification", status: "pending", formStatus: "form pending", date: "20/5/2026", href: "/demo/fills-forms" },
+              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Criminal Record Check", status: "approved", formStatus: "approved by enterprise", date: "18/5/2026", href: "/demo/approved" },
+              { name: "TechVista Solutions Pvt. Ltd.", services: "Employment Verification, Education Verification, Reference Check", status: "verified", formStatus: "verified", date: "15/5/2026", href: "/demo/report-ready" },
             ].map((item, i) => (
-              <div key={i} className="recent-request-item">
+              <Link key={i} href={item.href} className="recent-request-item" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
                 <div>
                   <strong>{item.name}</strong>
                   <span className="recent-request-meta" style={{ display: "block" }}>{item.services}</span>
@@ -117,7 +116,7 @@ export default function CandidateDashboardPage() {
                   <span className={`status-pill status-pill-${item.status}`}>{item.formStatus}</span>
                   <span className="recent-request-meta">{item.date}</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

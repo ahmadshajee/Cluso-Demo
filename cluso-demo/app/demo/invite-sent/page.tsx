@@ -1,9 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { ListChecks, Search } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
 import { customerUser, demoRequests } from "@/lib/demoData";
+
+const requestToStep: Record<string, string> = {
+  req_001: "/demo/candidate",
+  req_002: "/demo/approved",
+  req_003: "/demo/report-ready",
+  req_004: "/demo/hr-reviews",
+  req_005: "/demo/hr-reviews",
+  req_006: "/demo/approved",
+  req_007: "/demo/checks-done",
+  req_008: "/demo/candidate",
+  req_009: "/demo/verifier",
+};
 
 export default function InviteSentPage() {
   const companyRequests = demoRequests.filter((r) => r.customerName === "TechVista Solutions Pvt. Ltd.");
@@ -20,11 +33,11 @@ export default function InviteSentPage() {
         activeNavLabel="Requests"
       >
         <div className="block-card" style={{ padding: "1.2rem" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", gap: "0.5rem", flexWrap: "wrap" }}>
             <h3 className="block-title"><ListChecks size={18} /> All Requests</h3>
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative", flexShrink: 0, width: "min(240px, 100%)" }}>
               <Search size={14} style={{ position: "absolute", left: "0.7rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
-              <input className="input" placeholder="Search candidates..." readOnly style={{ paddingLeft: "2.2rem", width: "240px" }} />
+              <input className="input" placeholder="Search candidates..." readOnly style={{ paddingLeft: "2.2rem", width: "100%" }} />
             </div>
           </div>
 
@@ -35,8 +48,9 @@ export default function InviteSentPage() {
           <div className="request-list">
             {companyRequests.map((request) => {
               const isNew = request._id === newRequest._id;
+              const href = requestToStep[request._id] || "/demo/hr-reviews";
               return (
-                <div key={request._id} className={`request-item ${isNew ? "highlighted" : ""}`}>
+                <Link key={request._id} href={href} className={`request-item ${isNew ? "highlighted" : ""}`} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
                   <div className="request-item-left">
                     <span className="request-item-name">
                       {request.candidateName}
@@ -61,7 +75,7 @@ export default function InviteSentPage() {
                       Form: {request.candidateFormStatus}
                     </span>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

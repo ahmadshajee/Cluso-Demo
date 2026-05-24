@@ -1,11 +1,27 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { FileSignature, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
 import { candidateUser, candidateFormFields } from "@/lib/demoData";
+import { useState } from "react";
 
 export default function FillsFormsPage() {
+  const router = useRouter();
+  const [submitted, setSubmitted] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setTimeout(() => router.push("/demo/uploads-docs"), 1200);
+  };
+
+  const handleSave = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
   return (
     <>
       <DemoStepIndicator currentSlug="fills-forms" />
@@ -26,6 +42,17 @@ export default function FillsFormsPage() {
             Requested by <strong>TechVista Solutions Pvt. Ltd.</strong>
           </p>
 
+          {submitted && (
+            <div className="inline-alert inline-alert-success" style={{ marginBottom: "1rem" }}>
+              ✅ Form submitted successfully! Redirecting to document upload...
+            </div>
+          )}
+          {saved && (
+            <div className="inline-alert inline-alert-info" style={{ marginBottom: "1rem" }}>
+              💾 Draft saved successfully!
+            </div>
+          )}
+
           <div className="form-section" style={{ marginBottom: "1rem" }}>
             <h3 className="form-section-title">📋 Employment Details</h3>
             <div className="form-grid">
@@ -36,7 +63,6 @@ export default function FillsFormsPage() {
                     className="input"
                     type={field.fieldType === "date" ? "date" : field.fieldType === "email" ? "email" : "text"}
                     defaultValue={field.value}
-                    readOnly
                   />
                 </div>
               ))}
@@ -53,7 +79,6 @@ export default function FillsFormsPage() {
                     className="input"
                     type={field.fieldType === "date" ? "date" : field.fieldType === "email" ? "email" : "text"}
                     defaultValue={field.value}
-                    readOnly
                   />
                 </div>
               ))}
@@ -61,8 +86,18 @@ export default function FillsFormsPage() {
           </div>
 
           <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
-            <button className="btn btn-secondary" type="button">Save Draft</button>
-            <button className="btn btn-primary" type="button">Submit Form</button>
+            <button className="btn btn-secondary" type="button" onClick={handleSave} disabled={saved}>
+              {saved ? "Saved ✓" : "Save Draft"}
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted}
+              style={submitted ? { opacity: 0.6 } : {}}
+            >
+              {submitted ? "Submitting..." : "Submit Form"}
+            </button>
           </div>
         </div>
       </DemoPortalFrame>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Home } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { flowSteps, getStepIndex, getPrevStep, getNextStep, getPhaseLabel } from "@/lib/demoData";
 
 type Props = {
@@ -20,8 +20,8 @@ export function DemoStepIndicator({ currentSlug }: Props) {
     <div className="demo-step-indicator">
       <div className="demo-step-indicator-left">
         <Link href="/" className="demo-back-btn" aria-label="Back to flow">
-          <Home size={15} />
-          <span>Flow</span>
+          <ArrowLeft size={15} />
+          <span>Back to Flow</span>
         </Link>
         <div className="demo-step-info">
           <span className="demo-step-phase">{getPhaseLabel(current.phase)}</span>

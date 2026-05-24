@@ -1,13 +1,24 @@
 "use client";
 
-import { ListChecks, Search, ChevronDown, User, Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ListChecks, Search, ChevronDown, ChevronUp, User, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
-import { customerUser, demoRequests, candidateFormFields } from "@/lib/demoData";
+import { customerUser, demoRequests } from "@/lib/demoData";
+import { useState } from "react";
 
 export default function HRReviewsPage() {
+  const router = useRouter();
   const companyRequests = demoRequests.filter((r) => r.customerName === "TechVista Solutions Pvt. Ltd.");
-  const highlightedRequest = companyRequests.find((r) => r._id === "req_005")!; // Arjun Nair — pending, submitted
+  const [expandedId, setExpandedId] = useState<string>("req_005");
+
+  const handleApprove = () => {
+    router.push("/demo/approved");
+  };
+
+  const handleReject = () => {
+    router.push("/demo/approved");
+  };
 
   return (
     <>
@@ -30,14 +41,18 @@ export default function HRReviewsPage() {
 
           <div className="request-list">
             {companyRequests.map((request) => {
-              const isHighlighted = request._id === highlightedRequest._id;
+              const isExpanded = expandedId === request._id;
               return (
                 <div key={request._id}>
-                  <div className={`request-item ${isHighlighted ? "highlighted" : ""}`}>
+                  <div
+                    className={`request-item ${isExpanded ? "highlighted" : ""}`}
+                    onClick={() => setExpandedId(isExpanded ? "" : request._id)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <div className="request-item-left">
                       <span className="request-item-name">
                         {request.candidateName}
-                        {isHighlighted && (
+                        {isExpanded && (
                           <span style={{ background: "#fef3c7", color: "#92400e", fontSize: "0.68rem", padding: "0.12rem 0.45rem", borderRadius: "4px", fontWeight: 700, marginLeft: "0.5rem" }}>
                             REVIEWING
                           </span>
@@ -52,12 +67,12 @@ export default function HRReviewsPage() {
                     </div>
                     <div className="request-item-right">
                       <span className={`status-pill status-pill-${request.status}`}>{request.status}</span>
-                      <ChevronDown size={16} style={{ color: "#94a3b8" }} />
+                      {isExpanded ? <ChevronUp size={16} style={{ color: "#94a3b8" }} /> : <ChevronDown size={16} style={{ color: "#94a3b8" }} />}
                     </div>
                   </div>
 
-                  {/* Expanded details for highlighted request */}
-                  {isHighlighted && (
+                  {/* Expanded details */}
+                  {isExpanded && (
                     <div style={{ border: "1px solid #3b82f6", borderTop: "none", borderRadius: "0 0 14px 14px", padding: "1rem", background: "#f8faff" }}>
                       <div className="form-grid-two-col" style={{ marginBottom: "1rem" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.88rem" }}>
@@ -92,10 +107,10 @@ export default function HRReviewsPage() {
                       </div>
 
                       <div style={{ display: "flex", gap: "0.6rem", marginTop: "1rem" }}>
-                        <button className="btn btn-green" type="button" style={{ fontSize: "0.84rem", padding: "0.5rem 0.9rem" }}>
+                        <button className="btn btn-green" type="button" style={{ fontSize: "0.84rem", padding: "0.5rem 0.9rem" }} onClick={handleApprove}>
                           ✅ Approve Request
                         </button>
-                        <button className="btn btn-danger" type="button" style={{ fontSize: "0.84rem", padding: "0.5rem 0.9rem" }}>
+                        <button className="btn btn-danger" type="button" style={{ fontSize: "0.84rem", padding: "0.5rem 0.9rem" }} onClick={handleReject}>
                           ❌ Reject Request
                         </button>
                       </div>

@@ -22,11 +22,11 @@ export default function CompanyHRPage() {
   const rejectedCount = demoRequests.filter((r) => r.status === "rejected").length;
 
   const cards = [
-    { label: "Pending", value: pendingCount, tone: "portal-stat-sky", icon: ClipboardPlus, href: "#" },
-    { label: "Approved By Enterprise", value: approvedCount, tone: "portal-stat-emerald", icon: BadgeCheck, href: "#" },
-    { label: "Rejected By Enterprise", value: rejectedCount, tone: "portal-stat-rose", icon: TriangleAlert, href: "#" },
-    { label: "Verified", value: verifiedCount, tone: "portal-stat-sky", icon: ShieldCheck, href: "#" },
-    { label: "Total", value: demoRequests.filter((r) => r.customerName === "TechVista Solutions Pvt. Ltd.").length, tone: "portal-stat-violet", icon: Layers3, href: "#" },
+    { label: "Pending", value: pendingCount, tone: "portal-stat-sky", icon: ClipboardPlus, href: "/demo/hr-reviews" },
+    { label: "Approved By Enterprise", value: approvedCount, tone: "portal-stat-emerald", icon: BadgeCheck, href: "/demo/approved" },
+    { label: "Rejected By Enterprise", value: rejectedCount, tone: "portal-stat-rose", icon: TriangleAlert, href: "/demo/hr-reviews" },
+    { label: "Verified", value: verifiedCount, tone: "portal-stat-sky", icon: ShieldCheck, href: "/demo/company-hr-review" },
+    { label: "Total", value: demoRequests.filter((r) => r.customerName === "TechVista Solutions Pvt. Ltd.").length, tone: "portal-stat-violet", icon: Layers3, href: "/demo/invite-sent" },
   ];
 
   return (
@@ -43,7 +43,7 @@ export default function CompanyHRPage() {
           {cards.map((card) => {
             const Icon = card.icon;
             return (
-              <div key={card.label} className={`portal-stat portal-stat-link ${card.tone}`}>
+              <Link key={card.label} href={card.href} className={`portal-stat portal-stat-link ${card.tone}`} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
                 <div className="portal-stat-head">
                   <p className="portal-stat-value">{card.value}</p>
                   <span className="portal-stat-icon" aria-hidden="true">
@@ -51,7 +51,7 @@ export default function CompanyHRPage() {
                   </span>
                 </div>
                 <p className="portal-stat-label">{card.label}</p>
-              </div>
+              </Link>
             );
           })}
         </section>
@@ -91,9 +91,9 @@ export default function CompanyHRPage() {
               <strong>Manage Team Access</strong>
             </div>
             <p className="block-subtitle">Create delegate or user accounts without leaving this workspace.</p>
-            <span className="quick-action-link">
+            <Link href="/demo/company-hr" className="quick-action-link">
               Open Team <ArrowRight size={14} />
-            </span>
+            </Link>
           </div>
         </section>
       </DemoPortalFrame>

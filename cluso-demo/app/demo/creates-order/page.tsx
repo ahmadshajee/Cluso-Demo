@@ -1,12 +1,31 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ClipboardPlus, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
 import { customerUser, services } from "@/lib/demoData";
+import { useState } from "react";
 
 export default function CreatesOrderPage() {
-  const selectedIds = ["svc_001", "svc_002", "svc_003"];
+  const router = useRouter();
+  const [selectedIds, setSelectedIds] = useState(["svc_001", "svc_002", "svc_003"]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const toggleService = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setTimeout(() => router.push("/demo/invite-sent"), 1200);
+  };
+
+  const handleClear = () => {
+    setSelectedIds([]);
+  };
 
   return (
     <>
@@ -24,6 +43,12 @@ export default function CreatesOrderPage() {
             <h2 style={{ margin: 0, fontSize: "1.15rem", fontWeight: 700 }}>New Verification Order</h2>
             <span className="demo-label"><Sparkles size={11} /> Demo</span>
           </div>
+
+          {submitted && (
+            <div className="inline-alert inline-alert-success" style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              ✅ Order submitted successfully! Redirecting to invite screen...
+            </div>
+          )}
 
           <div className="form-grid">
             <div className="form-grid-two-col">
@@ -55,19 +80,23 @@ export default function CreatesOrderPage() {
             <input className="input" placeholder="Search services by name" readOnly style={{ marginTop: "0.4rem", marginBottom: "0.7rem" }} />
             <div className="service-check-grid">
               {services.filter((s) => !s.isPackage).map((service) => (
-                <label key={service.serviceId} className="service-check">
+                <label key={service.serviceId} className="service-check" style={{ cursor: "pointer" }}>
                   <input
                     type="checkbox"
                     checked={selectedIds.includes(service.serviceId)}
-                    readOnly
+                    onChange={() => toggleService(service.serviceId)}
                   />
                   <span style={{ fontWeight: 500 }}>{service.serviceName}</span>
                 </label>
               ))}
               {services.filter((s) => s.isPackage).map((service) => (
                 <div key={service.serviceId} className="service-check" style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.5rem" }}>
-                  <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <input type="checkbox" checked={false} readOnly />
+                  <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(service.serviceId)}
+                      onChange={() => toggleService(service.serviceId)}
+                    />
                     <span style={{ fontWeight: 500 }}>{service.serviceName}</span>
                     <span style={{ background: "#dbeafe", color: "#1d4ed8", fontSize: "0.72rem", padding: "0.1rem 0.4rem", borderRadius: "4px", fontWeight: 700 }}>PACKAGE</span>
                   </label>
@@ -83,8 +112,16 @@ export default function CreatesOrderPage() {
           </div>
 
           <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
-            <button className="btn btn-secondary" type="button">Clear</button>
-            <button className="btn btn-primary" type="button">Submit Order</button>
+            <button className="btn btn-secondary" type="button" onClick={handleClear}>Clear</button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted || selectedIds.length === 0}
+              style={submitted ? { opacity: 0.6 } : {}}
+            >
+              {submitted ? "Submitting..." : "Submit Order"}
+            </button>
           </div>
         </div>
       </DemoPortalFrame>

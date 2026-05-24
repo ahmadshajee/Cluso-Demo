@@ -420,6 +420,7 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   align-content: start;
   gap: 0.9rem;
+  z-index: 95;
 }
 
 .sidebar-brand {
@@ -453,6 +454,8 @@ a { color: inherit; text-decoration: none; }
 .admin-main {
   display: grid;
   gap: 0.95rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .admin-topbar {
@@ -729,6 +732,7 @@ a { color: inherit; text-decoration: none; }
   padding: 1.1rem;
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(19, 55, 96, 0.06);
+  overflow: hidden;
 }
 
 .block-title {
@@ -908,6 +912,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid transparent;
+  word-break: break-word;
 }
 
 .inline-alert-success { color: var(--success-text); background: var(--success-bg); border-color: rgba(14, 127, 69, 0.2); }
@@ -946,6 +951,7 @@ a { color: inherit; text-decoration: none; }
   gap: 0.8rem;
   transition: all 0.2s ease;
   cursor: pointer;
+  min-width: 0;
 }
 
 .request-item:hover {
@@ -963,22 +969,34 @@ a { color: inherit; text-decoration: none; }
 .request-item-left {
   display: grid;
   gap: 0.25rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .request-item-name {
   font-weight: 700;
   color: #1a202c;
   font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .request-item-services {
   font-size: 0.82rem;
   color: #718096;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .request-item-meta {
   font-size: 0.78rem;
   color: #a0aec0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .request-item-right {
@@ -986,6 +1004,8 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   align-items: flex-end;
   gap: 0.2rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* ═══════════════════════════════════════════
@@ -1306,7 +1326,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 14px;
   background: #ffffff;
   box-shadow: 0 14px 30px rgba(45, 64, 94, 0.18);
-  z-index: 1800;
+  z-index: 30;
   overflow: hidden;
 }
 
@@ -1539,6 +1559,26 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
 }
 
+/* ── Tablet & small desktop (≤ 1100px) ── */
+@media (max-width: 1100px) {
+  .portal-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .report-body {
+    padding: 1rem;
+  }
+
+  .report-header {
+    padding: 1.5rem 1.2rem 1rem;
+  }
+}
+
+/* ── Tablet (≤ 900px) ── */
 @media (max-width: 900px) {
   .admin-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -1579,6 +1619,459 @@ a { color: inherit; text-decoration: none; }
 
   .report-field {
     grid-template-columns: 1fr;
+  }
+
+  /* Topbar — make profile name visible */
+  .admin-topbar {
+    padding: 0.65rem 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .admin-topbar-title {
+    font-size: 1.1rem;
+  }
+
+  .account-actions-wrap {
+    gap: 0.4rem;
+    font-size: 0.82rem;
+  }
+
+  .account-actions-wrap > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Demo step indicator responsive */
+  .demo-step-indicator {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .demo-step-indicator-center {
+    order: 3;
+    width: 100%;
+  }
+
+  .demo-nav-label {
+    display: none;
+  }
+
+  .demo-back-btn span {
+    font-size: 0.75rem;
+  }
+
+  /* Request items stack */
+  .request-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .request-item-right {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  /* Recent request items stack */
+  .recent-request-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .recent-request-right {
+    justify-items: start;
+    flex-direction: row;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  /* Stat cards */
+  .portal-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .portal-stat {
+    padding: 0.7rem;
+  }
+
+  .portal-stat-value {
+    font-size: 1.25rem;
+  }
+
+  .portal-stat-label {
+    font-size: 0.8rem;
+  }
+
+  /* Report */
+  .report-container {
+    border-radius: 14px;
+  }
+
+  .report-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .report-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Dialog */
+  .demo-dialog {
+    padding: 1.1rem;
+    border-radius: 16px;
+  }
+
+  .demo-dialog-footer {
+    flex-wrap: wrap;
+  }
+
+  /* Hire decision */
+  .hire-decision-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .hire-decision-title {
+    font-size: 1.3rem;
+  }
+
+  .hire-decision-text {
+    font-size: 0.92rem;
+  }
+
+  /* Quick actions */
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Small mobile (≤ 600px) ── */
+@media (max-width: 600px) {
+  body {
+    font-size: 0.92rem;
+  }
+
+  .portal-shell {
+    width: 100%;
+    padding: 0.8rem 0.5rem 3rem;
+  }
+
+  /* Topbar compact */
+  .admin-topbar {
+    padding: 0.5rem 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .admin-topbar-title {
+    font-size: 0.95rem;
+  }
+
+  .portal-topbar-leading {
+    gap: 0.4rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .portal-topbar-leading > div {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .portal-topbar-leading p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .account-actions-wrap {
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .account-actions-wrap > div {
+    font-size: 0.78rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .logout-btn {
+    display: none;
+  }
+
+  /* Step indicator ultra-compact */
+  .demo-step-indicator {
+    padding: 0.4rem 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .demo-back-btn {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .demo-step-phase {
+    font-size: 0.6rem;
+  }
+
+  .demo-step-current {
+    font-size: 0.78rem;
+  }
+
+  .demo-step-emoji {
+    font-size: 0.9rem;
+  }
+
+  .demo-progress-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .demo-progress-dot.active {
+    width: 10px;
+    height: 10px;
+  }
+
+  .demo-step-count {
+    font-size: 0.6rem;
+  }
+
+  .demo-nav-btn {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+
+  /* Stat cards stacking */
+  .portal-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .portal-stat-icon-wrap {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 10px;
+  }
+
+  /* Block cards */
+  .block-card {
+    padding: 0.75rem !important;
+    border-radius: 14px;
+  }
+
+  .block-title {
+    font-size: 0.88rem;
+  }
+
+  /* Request items */
+  .request-item {
+    padding: 0.65rem 0.7rem;
+    border-radius: 10px;
+  }
+
+  .request-item-name {
+    font-size: 0.85rem;
+  }
+
+  .request-item-services {
+    font-size: 0.75rem;
+  }
+
+  .request-item-meta {
+    font-size: 0.7rem;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.82rem;
+    border-radius: 10px;
+  }
+
+  /* Forms */
+  .input {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.84rem;
+    border-radius: 8px;
+  }
+
+  .textarea {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.84rem;
+    border-radius: 8px;
+    min-height: 60px;
+  }
+
+  .label {
+    font-size: 0.82rem;
+  }
+
+  /* Upload zone */
+  .upload-zone {
+    padding: 1.2rem;
+  }
+
+  .upload-zone-icon {
+    font-size: 1.8rem;
+  }
+
+  /* Dialog */
+  .demo-dialog {
+    padding: 0.9rem;
+    border-radius: 14px;
+  }
+
+  .demo-dialog-title {
+    font-size: 0.95rem;
+  }
+
+  .demo-dialog-footer {
+    gap: 0.4rem;
+  }
+
+  /* Dashboard header */
+  .dashboard-header {
+    gap: 0.5rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .top-actions {
+    gap: 0.35rem;
+  }
+
+  .top-actions .btn {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  /* Notification panel */
+  .notification-panel-demo {
+    width: 100%;
+    max-width: 100% !important;
+  }
+
+  /* Report */
+  .report-body {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  .report-header {
+    padding: 1rem;
+  }
+
+  .report-header h2 {
+    font-size: 0.95rem;
+  }
+
+  .report-section-title {
+    font-size: 0.85rem;
+  }
+
+  .report-field {
+    font-size: 0.8rem;
+  }
+
+  /* Hire decision */
+  .hire-decision-page {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .hire-decision-card {
+    padding: 1.5rem 1.2rem;
+    border-radius: 18px;
+  }
+
+  .hire-decision-icon {
+    font-size: 2.8rem;
+  }
+
+  .hire-decision-title {
+    font-size: 1.15rem;
+  }
+
+  .hire-decision-text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  /* Flow page */
+  .flow-title {
+    font-size: 1.4rem;
+  }
+
+  .flow-subtitle {
+    font-size: 0.88rem;
+    margin-bottom: 30px;
+  }
+
+  .icon-circle {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+  }
+
+  .icon-circle.stakeholder {
+    width: 64px;
+    height: 64px;
+    font-size: 30px;
+  }
+
+  .step-label {
+    font-size: 0.62rem;
+    max-width: 70px;
+  }
+
+  .arrow {
+    font-size: 16px;
+  }
+
+  .flow-row {
+    gap: 8px;
+  }
+}
+
+/* ── Extra small mobile (≤ 400px) ── */
+@media (max-width: 400px) {
+  .demo-step-info {
+    display: none;
+  }
+
+  .portal-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .portal-stat {
+    padding: 0.55rem;
+  }
+
+  .portal-stat-value {
+    font-size: 1.1rem;
+  }
+
+  .account-actions-wrap > div {
+    max-width: 70px;
+    font-size: 0.72rem;
+  }
+
+  .admin-topbar-title {
+    font-size: 0.85rem;
   }
 }
 

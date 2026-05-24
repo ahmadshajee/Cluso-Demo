@@ -1,13 +1,12 @@
 "use client";
 
-import { Bell, CheckCheck } from "lucide-react";
+import Link from "next/link";
+import { CheckCheck } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
-import { customerUser, demoRequests } from "@/lib/demoData";
+import { customerUser } from "@/lib/demoData";
 
 export default function DeliveredPage() {
-  const companyRequests = demoRequests.filter((r) => r.customerName === "TechVista Solutions Pvt. Ltd.");
-
   return (
     <>
       <DemoStepIndicator currentSlug="delivered" />
@@ -21,17 +20,17 @@ export default function DeliveredPage() {
         {/* Simplified stat cards */}
         <div className="portal-stats-grid">
           {[
-            { label: "Pending", value: 3, tone: "portal-stat-sky" },
-            { label: "Approved", value: 3, tone: "portal-stat-emerald" },
-            { label: "Verified", value: 3, tone: "portal-stat-cyan" },
-            { label: "Total", value: 9, tone: "portal-stat-violet" },
+            { label: "Pending", value: 3, tone: "portal-stat-sky", href: "/demo/hr-reviews" },
+            { label: "Approved", value: 3, tone: "portal-stat-emerald", href: "/demo/approved" },
+            { label: "Verified", value: 3, tone: "portal-stat-cyan", href: "/demo/report-ready" },
+            { label: "Total", value: 9, tone: "portal-stat-violet", href: "/demo/invite-sent" },
           ].map((card) => (
-            <div key={card.label} className={`portal-stat ${card.tone}`}>
+            <Link key={card.label} href={card.href} className={`portal-stat ${card.tone}`} style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
               <div className="portal-stat-head">
                 <p className="portal-stat-value">{card.value}</p>
               </div>
               <p className="portal-stat-label">{card.label}</p>
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -45,41 +44,41 @@ export default function DeliveredPage() {
               </button>
             </div>
             <div className="notification-list">
-              <div className="notification-item" style={{ borderColor: "#9ddccb", background: "#e8f8f3" }}>
+              <Link href="/demo/report-ready" className="notification-item" style={{ borderColor: "#9ddccb", background: "#e8f8f3", textDecoration: "none", color: "inherit", cursor: "pointer", display: "block" }}>
                 <span className="notification-item-title">📄 Report ready for Vikram Desai</span>
                 <span className="notification-item-detail">
                   Background verification report has been generated and is ready for review. Click to view the full report.
                 </span>
                 <span className="notification-item-time">23 May 2026, 6:30 PM</span>
-              </div>
-              <div className="notification-item" style={{ borderColor: "#9ddccb", background: "#e8f8f3" }}>
+              </Link>
+              <Link href="/demo/checks-done" className="notification-item" style={{ borderColor: "#9ddccb", background: "#e8f8f3", textDecoration: "none", color: "inherit", cursor: "pointer", display: "block" }}>
                 <span className="notification-item-title">✅ Request verified — Karan Singh</span>
                 <span className="notification-item-detail">
                   Karan Singh verification is now verified. Report will be generated shortly.
                 </span>
                 <span className="notification-item-time">22 May 2026, 4:15 PM</span>
-              </div>
-              <div className="notification-item notification-item-info">
+              </Link>
+              <Link href="/demo/approved" className="notification-item notification-item-info" style={{ textDecoration: "none", color: "inherit", cursor: "pointer", display: "block" }}>
                 <span className="notification-item-title">🏢 Request approved by enterprise</span>
                 <span className="notification-item-detail">
                   Ananya Gupta verification was approved by enterprise.
                 </span>
                 <span className="notification-item-time">20 May 2026, 2:30 PM</span>
-              </div>
-              <div className="notification-item notification-item-info">
+              </Link>
+              <Link href="/demo/creates-order" className="notification-item notification-item-info" style={{ textDecoration: "none", color: "inherit", cursor: "pointer", display: "block" }}>
                 <span className="notification-item-title">📋 New request created</span>
                 <span className="notification-item-detail">
                   Rahul Sharma is waiting for review.
                 </span>
                 <span className="notification-item-time">20 May 2026, 9:15 AM</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
 
-        <p className="inline-alert inline-alert-success">
+        <Link href="/demo/company-hr-review" className="inline-alert inline-alert-success" style={{ textDecoration: "none", color: "inherit", cursor: "pointer", display: "block" }}>
           📬 A new verification report has been delivered to your workspace. Open Requests to view the full report for Vikram Desai.
-        </p>
+        </Link>
       </DemoPortalFrame>
     </>
   );

@@ -1,11 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Upload, CheckCircle2, FileText, Sparkles } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
 import { candidateUser, uploadedDocuments } from "@/lib/demoData";
+import { useState } from "react";
 
 export default function UploadsDocsPage() {
+  const router = useRouter();
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setTimeout(() => router.push("/demo/hr-reviews"), 1200);
+  };
+
   return (
     <>
       <DemoStepIndicator currentSlug="uploads-docs" />
@@ -23,7 +33,13 @@ export default function UploadsDocsPage() {
             <span className="demo-label"><Sparkles size={11} /> Demo</span>
           </div>
 
-          <div className="upload-zone">
+          {submitted && (
+            <div className="inline-alert inline-alert-success" style={{ marginBottom: "1rem" }}>
+              ✅ All documents submitted! Redirecting to HR review...
+            </div>
+          )}
+
+          <div className="upload-zone" style={{ cursor: "pointer" }}>
             <div className="upload-zone-icon">📁</div>
             <p style={{ margin: "0 0 0.3rem", fontWeight: 600, color: "#334155" }}>
               Drag and drop files here
@@ -42,7 +58,7 @@ export default function UploadsDocsPage() {
             </h3>
             <div className="uploaded-file-list">
               {uploadedDocuments.map((doc, i) => (
-                <div key={i} className="uploaded-file-item">
+                <div key={i} className="uploaded-file-item" style={{ cursor: "pointer" }}>
                   <div className="uploaded-file-info">
                     <FileText size={16} style={{ color: "#3b82f6", flexShrink: 0 }} />
                     <span>{doc.name}</span>
@@ -55,7 +71,15 @@ export default function UploadsDocsPage() {
           </div>
 
           <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.5rem", justifyContent: "flex-end" }}>
-            <button className="btn btn-primary" type="button">Submit All Documents</button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted}
+              style={submitted ? { opacity: 0.6 } : {}}
+            >
+              {submitted ? "Submitting..." : "Submit All Documents"}
+            </button>
           </div>
         </div>
       </DemoPortalFrame>

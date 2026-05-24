@@ -1,13 +1,30 @@
 "use client";
 
-import { ListChecks, Search, Sparkles, User, Mail, Phone, MapPin, Calendar, Send } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ListChecks, Sparkles, User, Mail, Send } from "lucide-react";
 import { DemoPortalFrame } from "@/components/DemoPortalFrame";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
-import { adminUser, verifierUser, demoRequests, candidateFormFields } from "@/lib/demoData";
+import { adminUser, verifierUser, demoRequests } from "@/lib/demoData";
+import { useState } from "react";
 
 export default function VerifierPage() {
+  const router = useRouter();
   const approvedRequests = demoRequests.filter((r) => r.status === "approved");
-  const workingRequest = approvedRequests[0]; // Ananya Gupta
+  const [activeId, setActiveId] = useState(approvedRequests[0]?._id || "");
+  const [submitted, setSubmitted] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const workingRequest = approvedRequests.find((r) => r._id === activeId) || approvedRequests[0];
+
+  const handleSubmitAttempt = () => {
+    setSubmitted(true);
+    setTimeout(() => router.push("/demo/checks-done"), 1200);
+  };
+
+  const handleSaveDraft = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
 
   return (
     <>
@@ -28,9 +45,14 @@ export default function VerifierPage() {
 
             <div className="request-list">
               {approvedRequests.map((request) => {
-                const isActive = request._id === workingRequest._id;
+                const isActive = request._id === activeId;
                 return (
-                  <div key={request._id} className={`request-item ${isActive ? "highlighted" : ""}`}>
+                  <div
+                    key={request._id}
+                    className={`request-item ${isActive ? "highlighted" : ""}`}
+                    onClick={() => setActiveId(request._id)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <div className="request-item-left">
                       <span className="request-item-name">
                         {request.candidateName}
@@ -60,6 +82,17 @@ export default function VerifierPage() {
               📝 Log Verification Attempt — {workingRequest.candidateName}
             </h3>
 
+            {submitted && (
+              <div className="inline-alert inline-alert-success" style={{ marginBottom: "0.8rem" }}>
+                ✅ Verification attempt submitted! Redirecting...
+              </div>
+            )}
+            {saved && (
+              <div className="inline-alert inline-alert-info" style={{ marginBottom: "0.8rem" }}>
+                💾 Draft saved successfully!
+              </div>
+            )}
+
             <div className="form-grid-two-col" style={{ marginBottom: "1rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.88rem" }}>
                 <User size={15} style={{ color: "#6366f1" }} />
@@ -79,7 +112,7 @@ export default function VerifierPage() {
                 <div className="form-grid-two-col">
                   <div className="form-field">
                     <label className="label">Verification Mode</label>
-                    <select className="input" defaultValue="Manual" disabled>
+                    <select className="input" defaultValue="Manual">
                       <option>Manual</option>
                       <option>Email</option>
                       <option>Phone</option>
@@ -88,7 +121,7 @@ export default function VerifierPage() {
                   </div>
                   <div className="form-field">
                     <label className="label">Status</label>
-                    <select className="input" defaultValue="in-progress" disabled>
+                    <select className="input" defaultValue="in-progress">
                       <option value="in-progress">In Progress</option>
                       <option value="verified">Verified</option>
                       <option value="unverified">Unverified</option>
@@ -97,23 +130,31 @@ export default function VerifierPage() {
                 </div>
                 <div className="form-field">
                   <label className="label">Respondent Name</label>
-                  <input className="input" defaultValue="Priya Singh (HR Manager)" readOnly />
+                  <input className="input" defaultValue="Priya Singh (HR Manager)" />
                 </div>
                 <div className="form-field">
                   <label className="label">Respondent Email</label>
-                  <input className="input" defaultValue="priya.singh@company.com" readOnly />
+                  <input className="input" defaultValue="priya.singh@company.com" />
                 </div>
                 <div className="form-field">
                   <label className="label">Verification Comment</label>
-                  <textarea className="textarea" defaultValue="Contacted HR department. Verification in progress. Awaiting official confirmation letter." readOnly />
+                  <textarea className="textarea" defaultValue="Contacted HR department. Verification in progress. Awaiting official confirmation letter." />
                 </div>
               </div>
             ))}
 
             <div style={{ display: "flex", gap: "0.6rem", marginTop: "1rem", justifyContent: "flex-end" }}>
-              <button className="btn btn-secondary" type="button">Save Draft</button>
-              <button className="btn btn-primary" type="button" style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                <Send size={14} /> Submit Attempt
+              <button className="btn btn-secondary" type="button" onClick={handleSaveDraft} disabled={saved}>
+                {saved ? "Saved ✓" : "Save Draft"}
+              </button>
+              <button
+                className="btn btn-primary"
+                type="button"
+                style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}
+                onClick={handleSubmitAttempt}
+                disabled={submitted}
+              >
+                <Send size={14} /> {submitted ? "Submitting..." : "Submit Attempt"}
               </button>
             </div>
           </div>
