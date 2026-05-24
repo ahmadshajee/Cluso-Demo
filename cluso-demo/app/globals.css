@@ -455,8 +455,8 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   gap: 0.95rem;
   min-width: 0;
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .admin-topbar {
@@ -468,7 +468,8 @@ a { color: inherit; text-decoration: none; }
   position: sticky;
   top: 1rem;
   z-index: 60;
-  overflow: visible;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-topbar-title {
@@ -550,8 +551,6 @@ a { color: inherit; text-decoration: none; }
   z-index: 70;
   flex-shrink: 0;
   white-space: nowrap;
-  overflow: visible;
-  min-width: max-content;
 }
 
 .user-name-chip {
