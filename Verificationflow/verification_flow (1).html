@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification Process Flow</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #f8f9fc; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 20px; }
+.container { width: 100%; max-width: 1200px; }
+h1 { text-align: center; color: #2d3748; font-size: 1.4rem; margin-bottom: 50px; font-weight: 600; }
+.flow-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+.step { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.icon-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
+.icon-circle.stakeholder { width: 90px; height: 90px; font-size: 40px; border: 3px solid; }
+.step-label { font-size: 0.7rem; color: #4a5568; text-align: center; max-width: 90px; font-weight: 500; }
+.arrow { font-size: 24px; color: #a0aec0; animation: pulse 1.5s infinite; }
+.arrow-down { font-size: 24px; color: #a0aec0; animation: bounceDown 1.5s infinite; margin: 10px 0; }
+
+/* Stakeholder colors */
+.company { background: #ebf8ff; border-color: #3182ce; }
+.candidate { background: #f0fff4; border-color: #38a169; }
+.admin { background: #faf5ff; border-color: #805ad5; }
+.verifier { background: #fff5f5; border-color: #e53e3e; }
+
+/* Step colors */
+.step-blue { background: #dbeafe; }
+.step-green { background: #d1fae5; }
+.step-purple { background: #ede9fe; }
+.step-red { background: #fee2e2; }
+.step-yellow { background: #fef3c7; }
+.step-teal { background: #ccfbf1; }
+
+/* Animations */
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes pulse { 0%, 100% { opacity: 0.4; transform: translateX(0); } 50% { opacity: 1; transform: translateX(3px); } }
+@keyframes bounceDown { 0%, 100% { opacity: 0.4; transform: translateY(0); } 50% { opacity: 1; transform: translateY(3px); } }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.float { animation: float 2.5s ease-in-out infinite; }
+.float-delay1 { animation: float 2.5s ease-in-out 0.3s infinite; }
+.float-delay2 { animation: float 2.5s ease-in-out 0.6s infinite; }
+.float-delay3 { animation: float 2.5s ease-in-out 0.9s infinite; }
+.spin-slow { animation: spin 4s linear infinite; }
+.pop { animation: pop 2s ease-in-out infinite; }
+
+.section-label { text-align: center; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: #718096; margin: 30px 0 15px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Background Verification Process</h1>
+
+<div class="section-label">Order & Submission</div>
+<div class="flow-row">
+  <div class="step">
+    <div class="icon-circle stakeholder company float">🏢</div>
+    <div class="step-label">Company HR</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-blue float-delay1">📋</div>
+    <div class="step-label">Creates Order</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-yellow float-delay2">📧</div>
+    <div class="step-label">Invite Sent</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle stakeholder candidate float-delay3">👤</div>
+    <div class="step-label">Candidate</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-green float">📝</div>
+    <div class="step-label">Fills Forms</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-green float-delay1">📎</div>
+    <div class="step-label">Uploads Docs</div>
+  </div>
+</div>
+
+<div class="section-label">Review & Verification</div>
+<div class="flow-row">
+  <div class="step">
+    <div class="icon-circle stakeholder company pop">🏢</div>
+    <div class="step-label">HR Reviews</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-green float">✅</div>
+    <div class="step-label">Approved</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle stakeholder admin float-delay1">🛡️</div>
+    <div class="step-label">Admin</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle stakeholder verifier float-delay2">🕵️</div>
+    <div class="step-label">Verifier</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-purple spin-slow">🔍</div>
+    <div class="step-label">Checks Done</div>
+  </div>
+</div>
+
+<div class="section-label">Report & Decision</div>
+<div class="flow-row">
+  <div class="step">
+    <div class="icon-circle step-teal float">📄</div>
+    <div class="step-label">Report Ready</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-blue float-delay1">📬</div>
+    <div class="step-label">Delivered</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle stakeholder company float-delay2">🏢</div>
+    <div class="step-label">Company HR</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="step">
+    <div class="icon-circle step-green pop">🎯</div>
+    <div class="step-label">Hire Decision</div>
+  </div>
+</div>
+</div>
+</body>
+</html>

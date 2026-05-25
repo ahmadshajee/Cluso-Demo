@@ -1,11 +1,37 @@
 "use client";
 
-import { Shield, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, Download, Loader2 } from "lucide-react";
 import { DemoStepIndicator } from "@/components/DemoStepIndicator";
 import { DemoCallout } from "@/components/DemoCallout";
-import { reportData, candidateFormFields } from "@/lib/demoData";
+import { reportData } from "@/lib/demoData";
+import { buildDemoReportPdf } from "@/lib/buildDemoReportPdf";
 
 export default function ReportReadyPage() {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  async function handleDownloadPdf() {
+    if (isGenerating) return;
+    setIsGenerating(true);
+
+    try {
+      const pdfBytes = await buildDemoReportPdf(reportData);
+      const blob = new Blob([pdfBytes as BlobPart], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Cluso-Verification-Report-${reportData.reportNumber}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("PDF generation failed:", err);
+    } finally {
+      setIsGenerating(false);
+    }
+  }
+
   return (
     <>
       <DemoStepIndicator currentSlug="report-ready" />
@@ -120,7 +146,7 @@ export default function ReportReadyPage() {
             {/* Disclaimer */}
             <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "1.2rem", fontSize: "0.75rem", color: "#64748b", lineHeight: 1.6, marginTop: "1.5rem" }}>
               <div style={{ textAlign: "center", fontWeight: "700", color: "#475569", marginBottom: "0.8rem", letterSpacing: "0.05em" }}>--END OF REPORT--</div>
-              <div style={{ fontWeight: "700", color: "#475569", marginBottom: "0.5rem" }}>IMPORTANT NOTICE & DISCLAIMER</div>
+              <div style={{ fontWeight: "700", color: "#475569", marginBottom: "0.5rem" }}>IMPORTANT NOTICE &amp; DISCLAIMER</div>
               <p style={{ margin: "0 0 0.75rem" }}>
                 This report is provided by CLUSO INFOLINK PRIVATE LIMITED on a strictly confidential basis, solely for the exclusive use of the recipient for legitimate corporate and business purposes. It may not be reproduced, redistributed, or disclosed, in whole or in part, in any manner whatsoever without prior written consent.
               </p>
@@ -129,6 +155,31 @@ export default function ReportReadyPage() {
               </p>
               <p style={{ margin: 0 }}>
                 The recipient acknowledges that the handling and utilization of this data must strictly align with all prevailing Indian regulatory frameworks, including but not limited to the Digital Personal Data Protection Act, 2023 (DPDP Act) and the Information Technology Act, 2000, along with all subsequent amendments and rules.
+              </p>
+            </div>
+
+            {/* Download Report PDF Button */}
+            <div className="report-download-section">
+              <button
+                id="download-report-pdf-btn"
+                className="report-download-btn"
+                onClick={handleDownloadPdf}
+                disabled={isGenerating}
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 size={18} className="report-download-spinner" />
+                    Generating PDF…
+                  </>
+                ) : (
+                  <>
+                    <Download size={18} />
+                    Download Report PDF
+                  </>
+                )}
+              </button>
+              <p className="report-download-hint">
+                The generated PDF mirrors the enterprise portal&apos;s verification report — the same document that is shared with the client company.
               </p>
             </div>
           </div>
